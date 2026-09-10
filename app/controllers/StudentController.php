@@ -13,7 +13,7 @@ class StudentController extends Controller {
             'course' => 'BSIT',
             'year' => '3RD YEAR',
             'section' => '3F3',
-            'email' => 'basimmatuan99@gmail.com'
+            'email' => 'basimmatuan 99@gmail.com'
         ];
 
         $this->call->view('student/index', $student);
