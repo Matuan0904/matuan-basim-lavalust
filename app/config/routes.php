@@ -1,6 +1,20 @@
 <?php
 defined('PREVENT_DIRECT_ACCESS') OR exit('No direct script access allowed');
 
+$cors_origins = [
+    'http://localhost:5173',
+    'http://localhost:4173',
+    'https://incandescent-pavlova-7868bf.netlify.app'
+];
+
+$cors_origin = $_SERVER['HTTP_ORIGIN'] ?? '';
+
+if (in_array($cors_origin, $cors_origins, true)) {
+    header("Access-Control-Allow-Origin: $cors_origin");
+    header('Access-Control-Allow-Headers: Authorization, Content-Type, X-Requested-With, X-RateLimit-*');
+    header('Access-Control-Allow-Methods: GET, POST, PUT, DELETE, PATCH, OPTIONS');
+}
+
 $router->get('/', 'Welcome::index');
 
 $router->get('/login', 'AuthController::login');
@@ -37,7 +51,9 @@ $router->post('/api/logout', 'AuthApiController::logout');
 // CORS Preflight Routes
 
 $router->options('/api/login', function() {
-    header('Access-Control-Allow-Origin: http://localhost:5173');
+    if ($cors_origin && in_array($cors_origin, $cors_origins, true)) {
+    header("Access-Control-Allow-Origin: $cors_origin");
+}
     header('Access-Control-Allow-Headers: Authorization, Content-Type, X-Requested-With, X-RateLimit-*');
     header('Access-Control-Allow-Methods: GET, POST, PUT, DELETE, PATCH, OPTIONS');
     header('Access-Control-Max-Age: 3600');
@@ -46,7 +62,9 @@ $router->options('/api/login', function() {
 });
 
 $router->options('/api/refresh', function() {
-    header('Access-Control-Allow-Origin: http://localhost:5173');
+    if ($cors_origin && in_array($cors_origin, $cors_origins, true)) {
+    header("Access-Control-Allow-Origin: $cors_origin");
+}
     header('Access-Control-Allow-Headers: Authorization, Content-Type, X-Requested-With, X-RateLimit-*');
     header('Access-Control-Allow-Methods: GET, POST, PUT, DELETE, PATCH, OPTIONS');
     header('Access-Control-Max-Age: 3600');
@@ -55,7 +73,9 @@ $router->options('/api/refresh', function() {
 });
 
 $router->options('/api/logout', function() {
-    header('Access-Control-Allow-Origin: http://localhost:5173');
+    if ($cors_origin && in_array($cors_origin, $cors_origins, true)) {
+    header("Access-Control-Allow-Origin: $cors_origin");
+}
     header('Access-Control-Allow-Headers: Authorization, Content-Type, X-Requested-With, X-RateLimit-*');
     header('Access-Control-Allow-Methods: GET, POST, PUT, DELETE, PATCH, OPTIONS');
     header('Access-Control-Max-Age: 3600');
@@ -74,7 +94,9 @@ $router->delete('/api/products/{id}', 'ProductApiController::delete');
 
 // Product CORS Preflight Routes
 $router->options('/api/products', function() {
-    header('Access-Control-Allow-Origin: http://localhost:5173');
+   if ($cors_origin && in_array($cors_origin, $cors_origins, true)) {
+    header("Access-Control-Allow-Origin: $cors_origin");
+}
     header('Access-Control-Allow-Headers: Authorization, Content-Type, X-Requested-With, X-RateLimit-*');
     header('Access-Control-Allow-Methods: GET, POST, PUT, DELETE, PATCH, OPTIONS');
     header('Access-Control-Max-Age: 3600');
@@ -83,7 +105,9 @@ $router->options('/api/products', function() {
 });
 
 $router->options('/api/products/{id}', function() {
-    header('Access-Control-Allow-Origin: http://localhost:5173');
+    if ($cors_origin && in_array($cors_origin, $cors_origins, true)) {
+    header("Access-Control-Allow-Origin: $cors_origin");
+}
     header('Access-Control-Allow-Headers: Authorization, Content-Type, X-Requested-With, X-RateLimit-*');
     header('Access-Control-Allow-Methods: GET, POST, PUT, DELETE, PATCH, OPTIONS');
     header('Access-Control-Max-Age: 3600');
