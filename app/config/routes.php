@@ -29,13 +29,64 @@ $router->get('refresh', 'MigrationController::refresh');
 $router->get('status', 'MigrationController::status');
 
 // API Authentication Routes
+
 $router->post('/api/login', 'AuthApiController::login');
 $router->post('/api/refresh', 'AuthApiController::refresh');
 $router->post('/api/logout', 'AuthApiController::logout');
 
+// CORS Preflight Routes
+
+$router->options('/api/login', function() {
+    header('Access-Control-Allow-Origin: http://localhost:5173');
+    header('Access-Control-Allow-Headers: Authorization, Content-Type, X-Requested-With, X-RateLimit-*');
+    header('Access-Control-Allow-Methods: GET, POST, PUT, DELETE, PATCH, OPTIONS');
+    header('Access-Control-Max-Age: 3600');
+
+    http_response_code(204);
+});
+
+$router->options('/api/refresh', function() {
+    header('Access-Control-Allow-Origin: http://localhost:5173');
+    header('Access-Control-Allow-Headers: Authorization, Content-Type, X-Requested-With, X-RateLimit-*');
+    header('Access-Control-Allow-Methods: GET, POST, PUT, DELETE, PATCH, OPTIONS');
+    header('Access-Control-Max-Age: 3600');
+
+    http_response_code(204);
+});
+
+$router->options('/api/logout', function() {
+    header('Access-Control-Allow-Origin: http://localhost:5173');
+    header('Access-Control-Allow-Headers: Authorization, Content-Type, X-Requested-With, X-RateLimit-*');
+    header('Access-Control-Allow-Methods: GET, POST, PUT, DELETE, PATCH, OPTIONS');
+    header('Access-Control-Max-Age: 3600');
+
+    http_response_code(204);
+});
+
+
 // Product API Routes
+
 $router->get('/api/products', 'ProductApiController::index');
 $router->post('/api/products', 'ProductApiController::store');
 $router->put('/api/products/{id}', 'ProductApiController::update');
 $router->patch('/api/products/{id}', 'ProductApiController::update');
 $router->delete('/api/products/{id}', 'ProductApiController::delete');
+
+// Product CORS Preflight Routes
+$router->options('/api/products', function() {
+    header('Access-Control-Allow-Origin: http://localhost:5173');
+    header('Access-Control-Allow-Headers: Authorization, Content-Type, X-Requested-With, X-RateLimit-*');
+    header('Access-Control-Allow-Methods: GET, POST, PUT, DELETE, PATCH, OPTIONS');
+    header('Access-Control-Max-Age: 3600');
+
+    http_response_code(204);
+});
+
+$router->options('/api/products/{id}', function() {
+    header('Access-Control-Allow-Origin: http://localhost:5173');
+    header('Access-Control-Allow-Headers: Authorization, Content-Type, X-Requested-With, X-RateLimit-*');
+    header('Access-Control-Allow-Methods: GET, POST, PUT, DELETE, PATCH, OPTIONS');
+    header('Access-Control-Max-Age: 3600');
+
+    http_response_code(204);
+});
